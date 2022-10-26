@@ -1,6 +1,36 @@
 #include <iostream>
+#include <iomanip>
+#include "PointSet.h"
+#include "Polynomial.h"
 
 int main() {
-    std::cout << "Hello, Lab_06" << std::endl;
-    return 0;
+    /*int n = 2;
+    cout<<"Pontok\tMinTav\t MaxTav\t #tavolsagok\t#kulonbozotavolsagok"<<endl;
+    cout<< fixed;
+    for( int i= 0; i<12; ++i ){
+        PointSet pSet( n );
+        cout<<setw(6)<<n<<" ";
+        cout<<setw(8)<<setprecision(2)<<pSet.minDistance()<<" ";
+        cout<<setw(8)<<setprecision(2)<<pSet.maxDistance()<<" ";
+        cout<<setw(10) << pSet.numDistances()<<" ";
+        cout<<setw(16) << pSet.numDistinctDistances()<<endl;
+        n = n << 1;
+    }*/
+
+    /*PointSet pset1(10);
+    cout<<"#points: " <<Point::getCounter()<<endl;
+    PointSet pset2(20);
+    cout<<"#points: " <<Point::getCounter()<<endl;*/
+
+    double* array = new double[3];
+    array[0]=2;
+    array[1]=1;
+    array[2]=1;
+
+    Polynomial p1(2,array);
+
+    Polynomial p2(p1.derivative());
+
+    p2.print();
+
 }
