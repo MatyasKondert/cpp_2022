@@ -19,7 +19,6 @@ Polynomial::Polynomial(const Polynomial &that)
     for (int i=0;i<=that.capacity;i++){
         this->coefficients[i]=that.coefficients[i];
     }
-    print();
 }
 
 Polynomial::Polynomial(Polynomial &&that)
@@ -28,7 +27,6 @@ Polynomial::Polynomial(Polynomial &&that)
     for (int i=0;i<=that.capacity;i++){
         this->coefficients[i]=that.coefficients[i];
     }
-
     that.capacity = -1;
     that.coefficients = nullptr;
 }
@@ -58,12 +56,9 @@ Polynomial Polynomial::derivative() const
     double* array = new double[this->capacity];
     for (int i=0;i<this->capacity;i++){
         array[i] = this->coefficients[i] * capacity - i;
-        cout<<i<<":"<<array[i]<<' ';
     }
 
-    cout<<this->capacity-1;
     Polynomial p(this->capacity-1, array);
-    p.print();
     return p;
 }
 
@@ -76,6 +71,86 @@ void Polynomial::print()
     }
     cout<<'\n';
 }
+
+double Polynomial::operator[](int index) const
+{
+    return this->coefficients[index];
+}
+
+Polynomial operator-(const Polynomial &a)
+{
+    int degree=a.capacity;
+    double* coef = new double[degree+1];
+    for (int i=0;i<=a.capacity;i++){
+        coef[i] = a.coefficients[i]*-1;
+    }
+    return Polynomial(degree, coef);
+}
+
+Polynomial operator+(const Polynomial &a, const Polynomial &b)
+{
+    int degree;
+    if (a.capacity>b.capacity)
+        degree = a.capacity;
+    else
+        degree = b.capacity;
+    double* coef = new double[degree+1];
+    for (int i=0;i<=degree;i++){
+        if (a.capacity >= i && b.capacity >= i){
+            coef[degree-i] = a.coefficients[a.capacity-i] + b.coefficients[b.capacity-i];
+            continue;
+        }
+        if (a.capacity >= i){
+            coef[degree-i] = a.coefficients[degree-i];
+        }
+        if (b.capacity >= i){
+            coef[degree-i] = b.coefficients[degree-i];
+        }
+    }
+    return Polynomial(degree, coef);
+}
+
+Polynomial operator-(const Polynomial &a, const Polynomial &b)
+{
+    int degree;
+    if (a.capacity>b.capacity)
+        degree = a.capacity;
+    else
+        degree = b.capacity;
+    double* coef = new double[degree+1];
+    for (int i=0;i<=degree;i++){
+        if (a.capacity >= i && b.capacity >= i){
+            coef[degree-i] = a.coefficients[a.capacity-i] - b.coefficients[b.capacity-i];
+            continue;
+        }
+        if (a.capacity >= i){
+            coef[degree-i] = a.coefficients[degree-i];
+        }
+        if (b.capacity >= i){
+            coef[degree-i] = -b.coefficients[degree-i];
+        }
+    }
+    return Polynomial(degree, coef);
+}
+
+Polynomial operator*(const Polynomial &a, const Polynomial &b)
+{
+    int degree = a.capacity+b.capacity;
+    double* coef = new double[degree+1];
+    for (int i=0;i<=degree;i++){
+        coef[i] = 0;
+    }
+    for (int i=0;i<=a.capacity;i++){
+        for (int j=0;j<=b.capacity;j++){
+            coef[i+j] += a[i]*b[j];
+        }
+    }
+    return Polynomial(degree, coef);
+}
+
+
+
+
 
 
 
