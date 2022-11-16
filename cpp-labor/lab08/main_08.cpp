@@ -109,12 +109,30 @@ int main() {
                 'l','m','n','o','p','q','r','s','t','u',
                 'v','w','x','y','z'};
 
+    vector<string> monthsLower {
+            "january", "february", "march", "april", "may", "june",
+            "july", "august", "september", "october", "november", "december"
+    };
+
     random_device rd;
     mt19937 g(rd());
 
     shuffle(abc.begin(),abc.end(),g);
 
+    cout<<'\n';
+
     for_each(abc.begin(),abc.end(),[](char s){
+        cout<<s<<" ";
+    });
+
+    cout<<'\n';
+
+    sort(monthsLower.begin(),monthsLower.end(),[abc](string a,string b){
+        return distance(abc.begin(),find(abc.begin(),abc.end(),a[0])) <
+        distance(abc.begin(),find(abc.begin(),abc.end(),b[0]));
+    });
+
+    for_each(monthsLower.begin(),monthsLower.end(),[](string s){
         cout<<s<<" ";
     });
     return 0;
