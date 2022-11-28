@@ -117,7 +117,7 @@ void OrderedList<T, LessComp, Equal>::insert(T &value)
         numberOfElements++;
         return;
     }
-    while (tmpFront != nullptr && LessComp(tmpFront->value,value)){
+    while (tmpFront != nullptr && LessComp()(tmpFront->value,value)){
         tmpBack = tmpFront;
         tmpFront = tmpFront->next;
     }
@@ -152,7 +152,7 @@ void OrderedList<T, LessComp, Equal>::remove(T &value)
     Node* tmpFront = first->next;
     Node* tmpBack = first;
 
-    if (Equal(first->value,value)){
+    if (Equal()(first->value,value)){
         tmpFront = first;
         first = first->next;
         delete tmpFront;
@@ -160,7 +160,7 @@ void OrderedList<T, LessComp, Equal>::remove(T &value)
     }
 
     while (tmpFront!= nullptr){
-        if (equal(tmpFront->value,value)){
+        if (Equal()(tmpFront->value,value)){
             tmpBack->next = tmpFront->next;
             delete tmpFront;
             return;
@@ -175,7 +175,7 @@ bool OrderedList<T, LessComp, Equal>::find(T &value) const
 {
     Node* tmpFront = first;
     while (tmpFront!= nullptr){
-        if (Equal(tmpFront->value,value))
+        if (Equal()(tmpFront->value,value))
             return true;
         tmpFront = tmpFront->next;
     }
