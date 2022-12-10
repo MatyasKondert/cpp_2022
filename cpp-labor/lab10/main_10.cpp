@@ -1,4 +1,5 @@
 #include <iostream>
+#include <set>
 #include "OrderdList.h"
 
 using namespace std;
@@ -28,7 +29,6 @@ struct PersonEqual {
         return (p1.fname == p2.fname) && (p1.lname == p2.lname);
     }
 };
-
 
 int main() {
     /*OrderedList<int> l;
